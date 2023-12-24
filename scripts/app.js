@@ -5,7 +5,12 @@ const HABIT_KEY = 'HABIT_KEY';
 
 /* page */
 const page = {
-    menu: document.querySelector('.menu__list')
+    menu: document.querySelector('.menu__list'),
+    header: {
+        h1: document.querySelector('.h1'),
+        progressPercent: document.querySelector('.progress__percent'),
+        progressCoverBar: document.querySelector('.progress__cover-bar')
+    }
 }
 
 function loadData() {
@@ -50,9 +55,20 @@ function rerenderMenu(activeHabit) {
     }
 }
 
+function renderHead(activeHabit) {
+    if (!activeHabit) {
+        return;
+    }
+    page.header.h1.innerText = activeHabit.name;
+    const progress = activeHabit.days.length / activeHabit.target > 1 ? 100 : activeHabit.days.length / activeHabit.target * 100;
+    page.header.progressPercent.innerText = progress.toFixed(0) + '%';
+    page.header.progressCoverBar.setAttribute('style', `width: ${progress}%`);
+}
+
 function rerender(activeHabitId) {
     const activeHabit = habits.find(habit => habit.id === activeHabitId);
     rerenderMenu(activeHabit);
+    renderHead(activeHabit);
 }
 
 /* init */
