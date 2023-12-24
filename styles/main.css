@@ -199,6 +199,10 @@ input::placeholder {
     color: #8899A8;
 }
 
+input.error {
+    border: solid 1px red;
+}
+
 .input_icon {
     padding-left: 45px;
 }
