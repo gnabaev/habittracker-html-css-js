@@ -17,7 +17,7 @@
             <img class="logo" src="/images/logo.svg" alt="Логотип Habit Tracker">
             <nav class="menu">
                 <div class="menu__list"></div>
-                <button class="menu__add">
+                <button class="menu__add" onclick="togglePopup()">
                     <img src="/images/add.svg" alt="Иконка плюса в окружности">
                 </button>
             </nav>
@@ -47,7 +47,7 @@
                 </div>
             </main>
         </div>
-        <div class="cover cover_hidden">
+        <div class="cover cover_hidden" id="add-habit-popup">
             <div class="popup">
                 <h2>Новая привычка</h2>
                 <div class="icon-label">Иконка</div>
@@ -67,7 +67,7 @@
                     <input type="number" name="targer" placeholder="Цель">
                     <button class="button" type="submit">Добавить</button>
                 </form>
-                <button class="popup__close">
+                <button class="popup__close" onclick="togglePopup()">
                     <img src="/images/cross.svg" alt="Иконка закрытия">
                 </button>
             </div>

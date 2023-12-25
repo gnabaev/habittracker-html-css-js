@@ -239,9 +239,9 @@ input.error {
     align-items: center;
 }
 
-/* .cover_hidden {
+.cover_hidden {
     display: none;
-} */
+}
 
 .popup {
     background: #FFFFFF;
