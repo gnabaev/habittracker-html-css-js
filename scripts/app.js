@@ -17,7 +17,8 @@ const page = {
         nextDay: document.querySelector('.habit__day')
     },
     popup: {
-        index: document.getElementById('add-habit-popup')
+        index: document.getElementById('add-habit-popup'),
+        iconField: document.querySelector('.popup__form input[name="icon"]')
     }
 }
 
@@ -141,6 +142,15 @@ function deleteDay(index) {
     });
     rerender(globalActiveHabitId);
     saveData();
+}
+
+/* habits */
+
+function setIcon(context, icon) {
+    page.popup.iconField.value = icon;
+    const activeIcon = document.querySelector('.icon.icon_active');
+    activeIcon.classList.revome('icon_active');
+    context.classList.add('icon_active');
 }
 
 /* init */
