@@ -44,6 +44,35 @@ function saveData() {
     localStorage.setItem(HABIT_KEY, JSON.stringify(habits));
 }
 
+function resetForm(form, fields) {
+    for (const field of fields) {
+        form[field].value = '';
+    }
+}
+
+function validateAndGetFormData(form, fields) {
+    const formData = new FormData(form);
+    const res = {};
+    for (const field of fields) {
+        const fieldValue = formData.get(field);
+        form[field].classList.remove('error');
+        if (!fieldValue) {
+            form[field].classList.add('error');
+        }
+        res[field] = fieldValue;
+    }
+    let isValid = true;
+    for (const field of fields) {
+        if (!res[field]) {
+            isValid = false;
+        }
+    }
+    if (!isValid) {
+        return;
+    }
+    return res;
+}
+
 /* render */
 
 function rerenderMenu(activeHabit) {
@@ -107,24 +136,21 @@ function rerender(activeHabitId) {
 /* form */
 
 function addDays(event) {
-    const form = event.target;
     event.preventDefault();
-    const data = new FormData(form);
-    const comment = data.get('comment');
-    form['comment'].classList.remove('error');
-    if (!comment) {
-        form['comment'].classList.add('error');
+    const data = validateAndGetFormData(event.target, ['comment']);
+    if (!data) {
+        return;
     }
     habits = habits.map(habit => {
         if (habit.id === globalActiveHabitId) {
             return {
                 ...habit,
-                days: habit.days.concat([{ comment }])
+                days: habit.days.concat([{ comment: data.comment }])
             }
         }
         return habit;
     });
-    form['comment'].value = '';
+    resetForm(event.target, ['comment']);
     rerender(globalActiveHabitId);
     saveData();
 }
@@ -149,8 +175,28 @@ function deleteDay(index) {
 function setIcon(context, icon) {
     page.popup.iconField.value = icon;
     const activeIcon = document.querySelector('.icon.icon_active');
-    activeIcon.classList.revome('icon_active');
+    activeIcon.classList.remove('icon_active');
     context.classList.add('icon_active');
+}
+
+function addHabit(event) {
+    event.preventDefault();
+    const data = validateAndGetFormData(event.target, ['name', 'icon', 'target']);
+    if (!data) {
+        return;
+    }
+    const maxId = habits.reduce((acc, habit) => acc > habit.id ? acc : habit.id, 0);
+    habits.push({
+        id: maxId + 1,
+        name: data.name,
+        target: data.target,
+        icon: data.icon,
+        days: []
+    })
+    resetForm(event.target, ['name', 'target']);
+    togglePopup();
+    saveData();
+    rerender(maxId + 1);
 }
 
 /* init */

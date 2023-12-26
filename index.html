@@ -62,10 +62,10 @@
                         <img src="/images/food.svg" alt="Иконка еды">
                     </button>
                 </div>
-                <form class="popup__form">
+                <form class="popup__form" onsubmit="addHabit(event)">
                     <input type="text" name="name" placeholder="Название">
                     <input type="text" name="icon" hidden placeholder="Иконка" value="dumbbell">
-                    <input type="number" name="targer" placeholder="Цель">
+                    <input type="number" name="target" placeholder="Цель">
                     <button class="button" type="submit">Добавить</button>
                 </form>
                 <button class="popup__close" onclick="togglePopup()">
